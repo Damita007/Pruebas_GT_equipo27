@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on localhost:8000
+From: webmaster@localhost
+To: butterfly.salgado.dsa@gmail.com
+Date: Wed, 11 May 2022 07:50:07 -0000
+Message-ID: <165225540744.47880.15779944803803771983@scharahzada-K53TA>
+
+
+You're receiving this email because you requested a password reset for your user account at localhost:8000.
+
+Please go to the following page and choose a new password:
+
+http://localhost:8000/users/reset/MQ/b58nvj-61768d411c09aee7ccfb5baa6fa624bd/
+
+Your username, in case you’ve forgotten: butterfly.salgado.dsa@gmail.com
+
+Thanks for using our site!
+
+The localhost:8000 team
+
+
+
+-------------------------------------------------------------------------------

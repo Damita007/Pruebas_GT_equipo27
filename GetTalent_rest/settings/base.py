@@ -1,4 +1,6 @@
 from pathlib import Path
+import os
+from re import TEMPLATE
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +22,7 @@ ALLOWED_HOSTS = []
 #Aplicaciones base que vienen por defecto 
 BASE_APPS = [
     'django.contrib.admin',  #Se comenta cuando se borran las migreaciones para correr desde cero
-    'django.contrib.auth',
+    'django.contrib.auth',   #
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -29,15 +31,24 @@ BASE_APPS = [
 #Aplicaciones locales, las que yo estoy creando
 LOCAL_APPS = [
     'apps.users',   #GT Enlazar esta base de users con la otra aplicación
+    
 ]
 #Aplicaciones de terceros, las librerias externas que ocuparé en algun momento
 THIRD_APPS =[
     'rest_framework',
-    'simple_history',     #GT
+    # 'rest_framework.authtoken',   
+    # 'rest_auth',
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'rest_auth.registration',
+    'simple_history',    
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
+# AUTH_USER_MODEL = 'users.User'   #GT Mi aplicación va a funcionar con un modelo llamada usuario
+AUTH_USER_MODEL = 'users.CustomUser' #GT segundo ejercicio
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,10 +63,34 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'GetTalent_rest.urls'
 
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS':[],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
+
+# SETTINGS_PATH = os.path.realpath(os.path.dirname(__file__))
+# # Find templates in the same folder as settings.py.
+
+# TEMPLATE_DIRS = (
+#     '/home/scharahzada/Documentos/PROYECTO_BOOTCAMP/GET_TALENT/Prueba2/GetTalent_rest/GetTalent_rest/templates'
+#     os.path.join(SETTINGS_PATH, 'templates'),
+# )
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS':['GetTalent_rest/templates',],                                                   #[os.path.join(BASE_DIR,'templates')],  #GT se edita para proyecto
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +102,11 @@ TEMPLATES = [
         },
     },
 ]
+
+
+#Inicio y cierre de sesión
+LOGIN_REDIRECT_URL = 'home'   #Asi esta configurado en GetTalent_rest/urls.py     #"/" 
+LOGOUT_REDIRECT_URL = 'home'  #Asi esta configurado en GetTalent_rest/urls.py  # "/"
 
 WSGI_APPLICATION = 'GetTalent_rest.wsgi.application'
 
@@ -99,7 +139,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'users.User'   #GT Mi aplicación va a funcionar con un modelo llamada usuario
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -111,18 +151,30 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# DJANGO-ALLAUTH CONFIGURACIÓN
 
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_UNIQUE_EMAIL = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'    #GT Uso de correo electrónico en lugar de nombre de usuario
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'   #GT Enviar el mensaje de verificación de correo electrónico al registrarse el usuario con el enlace de verificación
+# ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+# ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/?verification=1'   #GT Cuando el usuario hace clic en el enlace, su correo electrónico se verifica y se redirige a/?verification=1
+# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'   #GT cuando el usuario hace clic en el enlace, su correo electrónico se verifica y se redirige a/?verification=1
 
+# SITE_ID = 1
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# Serializador
 
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
+}
 
-
-
-
-
-
-
-
+# SMTP Server
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 
 
